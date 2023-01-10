@@ -1,15 +1,15 @@
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.ArrayList;
 
 @XmlRootElement
 public class Videoclub {
-    private String name;
+    private final String name = "Sergio y Jordan";
     private ArrayList<Film> films;
     private ArrayList<Game> games;
 
-    public Videoclub(String name, ArrayList<Film> films, ArrayList<Game> games) {
-        this.name = name;
+    public Videoclub(ArrayList<Film> films, ArrayList<Game> games) {
         this.films = films;
         this.games = games;
     }
@@ -18,12 +18,9 @@ public class Videoclub {
         super();
     }
 
+    @XmlElement(name = "name")
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public ArrayList<Film> getFilms() {
