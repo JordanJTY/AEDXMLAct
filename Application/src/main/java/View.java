@@ -5,9 +5,8 @@ import javax.swing.*;
 public class View extends JFrame {
     static Controller controller = new Controller();
     private JButton createXMLFileButton;
-    private JButton modifyXMLFileButton;
     private JButton deleteXMLFileButton;
-    private JTextArea Console;
+    private JTextArea console;
     private JTextField nameGame;
     private JTextField genreGame;
     private JTextField priceGame;
@@ -28,14 +27,15 @@ public class View extends JFrame {
         submitFilm.addActionListener(e -> {
             if ((!nameFilm.getText().isEmpty() && !nameFilm.getText().isBlank()) &&
                     (!genreFilm.getText().isEmpty() && !genreFilm.getText().isBlank()) &&
-                    (!priceFilm.getText().isEmpty() && !priceFilm.getText().isBlank() && priceFilm.getText().chars().allMatch(Character::isDigit))) {
+                    (!priceFilm.getText().isEmpty() && !priceFilm.getText().isBlank() && priceFilm.getText().replace(".","").chars().allMatch(Character::isDigit))) {
                 System.out.println(nameFilm.getText() + " - " + genreFilm.getText() + " - " + priceFilm.getText());
-                controller.addFilm(new Film(nameFilm.getText(), genreFilm.getText(), Integer.parseInt(priceFilm.getText())));
+                controller.addFilm(new Film(nameFilm.getText(), genreFilm.getText(), Double.parseDouble(priceFilm.getText())));
             } else {
                 System.out.println("F");
+                System.out.println(nameFilm.getText() + " - " + genreFilm.getText() + " - " + priceFilm.getText());
             }
             try {
-                Console.setText(controller.updateConsole());
+                console.setText(controller.updateConsole());
             } catch (JAXBException ex) {
                 throw new RuntimeException(ex);
             }
@@ -44,15 +44,16 @@ public class View extends JFrame {
             if (
                     (!nameGame.getText().isEmpty() && !nameGame.getText().isBlank()) &&
                     (!genreGame.getText().isEmpty() && !genreGame.getText().isBlank()) &&
-                    (!priceGame.getText().isEmpty() && !priceGame.getText().isBlank() && priceGame.getText().chars().allMatch(Character::isDigit)) &&
+                    (!priceGame.getText().isEmpty() && !priceGame.getText().isBlank() && priceGame.getText().replace(".","").chars().allMatch(Character::isDigit)) &&
                     (!pegiGame.getText().isEmpty() && !pegiGame.getText().isBlank() && pegiGame.getText().chars().allMatch(Character::isDigit))) {
                 System.out.println(nameGame.getText() + " - " + genreGame.getText() + " - " + priceGame.getText() + " - " + pegiGame.getText());
-                controller.addGame(new Game(nameGame.getText(), genreGame.getText(), Integer.parseInt(priceGame.getText()), Integer.parseInt(pegiGame.getText())));
+                controller.addGame(new Game(nameGame.getText(), genreGame.getText(), Double.parseDouble(priceGame.getText()), Integer.parseInt(pegiGame.getText())));
             } else {
                 System.out.println("F");
+                System.out.println(nameGame.getText() + " - " + genreGame.getText() + " - " + priceGame.getText() + " - " + pegiGame.getText());
             }
             try {
-                Console.setText(controller.updateConsole());
+                console.setText(controller.updateConsole());
             } catch (JAXBException ex) {
                 throw new RuntimeException(ex);
             }
@@ -64,5 +65,14 @@ public class View extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
+        deleteXMLFileButton.addActionListener(e -> {
+            controller.clearXml();
+            try {
+                console.setText(controller.updateConsole());
+            } catch (JAXBException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
     }
 }

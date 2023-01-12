@@ -3,19 +3,15 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
@@ -63,6 +59,11 @@ public class Controller {
         return sw.toString();
     }
 
+    public void clearXml() {
+        game = new ArrayList<Game>();
+        film = new ArrayList<Film>();
+    }
+
     public void createVideoclub() throws JAXBException {
         createFile();
 //        Film f = new Film("Si", "Si", 69.99);
@@ -85,7 +86,7 @@ public class Controller {
                 File(VIDEOCLUB_XML));
     }
 
-    public void readFile() throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    public void readFile() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
