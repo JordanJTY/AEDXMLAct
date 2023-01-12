@@ -15,6 +15,9 @@ public class View extends JFrame {
     private JTextField priceFieldFilm;
     private JButton submitFilm;
     private JPanel View;
+    private JPanel gamePanel;
+    private JPanel buttons;
+    private JPanel filmPanel;
 
     public View() {
         super("Videoclub");

@@ -8,7 +8,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
@@ -45,7 +48,7 @@ public class Controller {
         game.add(g);
     }
 
-    public void createVideoclub() throws JAXBException, IOException {
+    public void createVideoclub() throws JAXBException {
         createFile();
         Film f = new Film("Si", "Si", 69.99);
         film.add(f);
@@ -65,21 +68,6 @@ public class Controller {
         // Write to File
         m.marshal(videoclub, new
                 File(VIDEOCLUB_XML));
-
-//        // get variables from our xml file, created before
-//        System.out.println();
-//        System.out.println("Output from our XML File: ");
-//        Unmarshaller um = context.createUnmarshaller();
-//        Videoclub videoclub2 = (Videoclub) um.unmarshal(new FileReader(
-//                VIDEOCLUB_XML));
-//        List<Game> gamelist = videoclub2.getGames();
-//        List<Film> filmlist = videoclub2.getFilms();
-//        for (Game cada : gamelist) {
-//            System.out.println(cada.toString());
-//        }
-//        for (Film cada : filmlist) {
-//            System.out.println(cada.toString());
-//        }
     }
 
     public void readFile() throws ParserConfigurationException, IOException, SAXException, TransformerException {
@@ -89,10 +77,10 @@ public class Controller {
         Transformer tform = TransformerFactory.newInstance().newTransformer();
         tform.setOutputProperty(OutputKeys.INDENT, "yes");
         tform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        tform.transform(new DOMSource(document),new StreamResult(System.out));
+        tform.transform(new DOMSource(document), new StreamResult(System.out));
     }
 
-    public void modifyVideoclub() throws JAXBException, IOException {
+    public void modifyVideoclub() throws JAXBException {
         Film f = new Film("Si", "Si", 69.99);
         film.add(f);
         Game g = new Game("Si", "Si", 20, 12);

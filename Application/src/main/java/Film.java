@@ -1,7 +1,5 @@
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-import java.util.Date;
-
 @XmlRootElement(name = "film")
 public class Film {
     private String name;
