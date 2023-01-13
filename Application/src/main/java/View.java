@@ -5,7 +5,8 @@ import javax.swing.*;
 public class View extends JFrame {
     static Controller controller = new Controller();
     private JButton createXMLFileButton;
-    private JButton deleteXMLFileButton;
+    private JButton clearXMLFileButton;
+    private JButton deteteXMLFileButton;
     private JTextArea console;
     private JTextField nameGame;
     private JTextField genreGame;
@@ -24,9 +25,11 @@ public class View extends JFrame {
     public View() {
         super("Videoclub");
         setContentPane(View);
+        deteteXMLFileButton.setVisible(false);
         String file = controller.readFile();
         if (file != "notexist") {
             console.setText(file);
+            deteteXMLFileButton.setVisible(true);
         }
         submitFilm.addActionListener(e -> {
             if ((!nameFilm.getText().isEmpty() && !nameFilm.getText().isBlank()) &&
@@ -63,11 +66,13 @@ public class View extends JFrame {
         createXMLFileButton.addActionListener(e -> {
             try {
                 controller.createVideoclub();
+                deteteXMLFileButton.setVisible(true);
+
             } catch (JAXBException ex) {
                 throw new RuntimeException(ex);
             }
         });
-        deleteXMLFileButton.addActionListener(e -> {
+        clearXMLFileButton.addActionListener(e -> {
             controller.clearXml();
             try {
                 console.setText(controller.updateConsole());
@@ -75,6 +80,10 @@ public class View extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-
+        deteteXMLFileButton.addActionListener(e -> {
+            controller.deleteFile();
+            console.setText("");
+            deteteXMLFileButton.setVisible(false);
+        });
     }
 }

@@ -114,6 +114,11 @@ public class Controller {
         }
     }
 
+    public void deleteFile(){
+        File file = new File(VIDEOCLUB_XML);
+        file.delete();
+    }
+
     public void modifyVideoclub() throws JAXBException {
         videoclub.setGames(game);
         videoclub.setFilms(film);
