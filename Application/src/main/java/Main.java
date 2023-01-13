@@ -6,10 +6,7 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 public class Main {
-    static Controller controller = new Controller();
-
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, TransformerException {
-        controller.readFile();
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new View();
             frame.setSize(800, 600);

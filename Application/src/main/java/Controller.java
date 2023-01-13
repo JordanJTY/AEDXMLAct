@@ -1,6 +1,7 @@
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -66,10 +67,6 @@ public class Controller {
 
     public void createVideoclub() throws JAXBException {
         createFile();
-//        Film f = new Film("Si", "Si", 69.99);
-//        film.add(f);
-//        Game g = new Game("Si", "Si", 20, 12);
-//        game.add(g);
         videoclub.setGames(game);
         videoclub.setFilms(film);
 
@@ -86,25 +83,38 @@ public class Controller {
                 File(VIDEOCLUB_XML));
     }
 
-    public void readFile() {
+    public String readFile() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
+            StringWriter sw = new StringWriter();
             Document document = builder.parse(new File(VIDEOCLUB_XML));
             Transformer tform = TransformerFactory.newInstance().newTransformer();
             tform.setOutputProperty(OutputKeys.INDENT, "yes");
             tform.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            tform.transform(new DOMSource(document), new StreamResult(System.out));
+            tform.transform(new DOMSource(document), new StreamResult(sw));
+            JAXBContext jaxbContext = JAXBContext.newInstance(Videoclub.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+            Videoclub videoclub1 = (Videoclub) jaxbUnmarshaller.unmarshal(new File(VIDEOCLUB_XML));
+            if (videoclub1.getFilms() != null) {
+                for (Film f : videoclub1.getFilms()) {
+                    addFilm(f);
+                }
+            }
+            if (videoclub1.getGames() != null) {
+                for (Game g : videoclub1.getGames()) {
+                    addGame(g);
+                }
+            }
+            return sw.toString();
         } catch (Exception e) {
             System.out.println("No existe");
+            return "notexist";
         }
     }
 
     public void modifyVideoclub() throws JAXBException {
-//        Film f = new Film("Si", "Si", 69.99);
-//        film.add(f);
-//        Game g = new Game("Si", "Si", 20, 12);
-//        game.add(g);
         videoclub.setGames(game);
         videoclub.setFilms(film);
 

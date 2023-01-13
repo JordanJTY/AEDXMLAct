@@ -24,15 +24,18 @@ public class View extends JFrame {
     public View() {
         super("Videoclub");
         setContentPane(View);
+        String file = controller.readFile();
+        if (file != "notexist") {
+            console.setText(file);
+        }
         submitFilm.addActionListener(e -> {
             if ((!nameFilm.getText().isEmpty() && !nameFilm.getText().isBlank()) &&
                     (!genreFilm.getText().isEmpty() && !genreFilm.getText().isBlank()) &&
-                    (!priceFilm.getText().isEmpty() && !priceFilm.getText().isBlank() && priceFilm.getText().replace(".","").chars().allMatch(Character::isDigit))) {
+                    (!priceFilm.getText().isEmpty() && !priceFilm.getText().isBlank() && priceFilm.getText().replace(".", "").chars().allMatch(Character::isDigit))) {
                 System.out.println(nameFilm.getText() + " - " + genreFilm.getText() + " - " + priceFilm.getText());
                 controller.addFilm(new Film(nameFilm.getText(), genreFilm.getText(), Double.parseDouble(priceFilm.getText())));
             } else {
-                System.out.println("F");
-                System.out.println(nameFilm.getText() + " - " + genreFilm.getText() + " - " + priceFilm.getText());
+                System.out.println("F Film");
             }
             try {
                 console.setText(controller.updateConsole());
@@ -43,14 +46,13 @@ public class View extends JFrame {
         submitGame.addActionListener(e -> {
             if (
                     (!nameGame.getText().isEmpty() && !nameGame.getText().isBlank()) &&
-                    (!genreGame.getText().isEmpty() && !genreGame.getText().isBlank()) &&
-                    (!priceGame.getText().isEmpty() && !priceGame.getText().isBlank() && priceGame.getText().replace(".","").chars().allMatch(Character::isDigit)) &&
-                    (!pegiGame.getText().isEmpty() && !pegiGame.getText().isBlank() && pegiGame.getText().chars().allMatch(Character::isDigit))) {
+                            (!genreGame.getText().isEmpty() && !genreGame.getText().isBlank()) &&
+                            (!priceGame.getText().isEmpty() && !priceGame.getText().isBlank() && priceGame.getText().replace(".", "").chars().allMatch(Character::isDigit)) &&
+                            (!pegiGame.getText().isEmpty() && !pegiGame.getText().isBlank() && pegiGame.getText().chars().allMatch(Character::isDigit))) {
                 System.out.println(nameGame.getText() + " - " + genreGame.getText() + " - " + priceGame.getText() + " - " + pegiGame.getText());
                 controller.addGame(new Game(nameGame.getText(), genreGame.getText(), Double.parseDouble(priceGame.getText()), Integer.parseInt(pegiGame.getText())));
             } else {
-                System.out.println("F");
-                System.out.println(nameGame.getText() + " - " + genreGame.getText() + " - " + priceGame.getText() + " - " + pegiGame.getText());
+                System.out.println("F Game");
             }
             try {
                 console.setText(controller.updateConsole());
